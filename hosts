@@ -11,7 +11,7 @@
 # Ex 1: CentOS 
 
 node1 ansible_connection=ssh ansible_ssh_host=192.168.122.96 ansible_ssh_user=root ansible_ssh_pass=adminadmin
-treebox-freeswith-candidate  ansible_connection=ssh ansible_ssh_host=192.168.122.249 ansible_ssh_user=root ansible_ssh_pass=adminadmin
+treebox-freeswith-candidate  ansible_connection=ssh ansible_ssh_host=188.166.233.213 ansible_ssh_user=udomsak ansible_ssh_pass=password123!
 
 # Ex 2: A collection of hosts belonging to the 'webservers' group
 

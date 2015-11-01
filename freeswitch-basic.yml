@@ -1,19 +1,21 @@
 ---
 ## usage: ansible-playbook -i <inventory file> myplaybook.yml
 
-- hosts: node1
+- hosts: all 
   sudo: yes 
   vars:
     users:
-      - username: fsuser2 
+      - username: fsuser 
         name: freeswitch users  
         home_dir: "/opt/freeswitch2/" 
         password: "123456"
         ssh_key:
-          - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVpUJQCOaPg3p5xro9e+1fkGRWNOGrrExiKMqTE91Fwu349bxfMnMzRS0PAERouR9EEL+Ee4Yzhav/uNc35eCtXzACtluXnAncMrQj6pM3IqASynhvXTygHljmcMbBSDQtLrTZeW+YzIcOgk5UM1yBi26WoUYva2aCr9IRvKdYreAK08OiMdZedpOye0ZdvIYJGcyITwc6YMmrAhP7jZlrk/mDEkf2a4eBp+475o7MJtaC9npqYkToM8vqvx5AGEKqXt7/f1/paOY7KsR+VGPQy6k2RkXjWBsXPesZ3d3XLZHE60wAk0EsuJO8A25+uWSB6ILQeRSYYmGea/WIf6kd noone@throwaway.example.com"
+            - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9bQslGDiJ7cObX07HnWxeBMJxBoG5y0ernnJW6U5eC8bk8hlebGJTdluYDBsa3UpJaIDOo44putydcP02ZNQ32L9YDZlpfmBCB0QZRgAI5bBiOL/3DyteDyLqkz1AAcfG6DduyAm1bt/2zXVzxnExaUYedhNyLuSlyY/FXW1oN9RKvwfCO8y/omgjYk08MwmAZ1H3qH6AQkeMZpWPmVNRhDBpfSP8VOE8Nvubkt/UJZAZ8MgSEkRzyDHRL/HSJ1dUSnbJ3MmF8UeKaYifxWvLJoxOh+I5yIQ6ZGmgboq3YOXppr4Rm+1xN8c9lLSIhOlYrMUEq8ywq4MiKYVv65Nr udomsak@localhost.localdomain"
 
   roles:
       - freeswitch-user  
+      - freeswitch
+
 
 #- hosts: node2
 #  roles:

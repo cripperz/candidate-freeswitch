@@ -1,7 +1,73 @@
 ---
 
-# file: {{ name }}/tasks/main.yml
+- name: Install EPEL
+  yum: name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+  tags:
+      - packages 
+   
 
+- name: Install require packages build tarball. 
+  yum: name={{ item }} state=installed
+  with_items:
+      - '"@Development tool"'
+      - git
+      - gcc-c++ 
+      - autoconf
+      - automake
+      - libtool
+      - wget
+      - python
+      - ncurses-devel
+      - zlib-devel
+      - libjpeg-devel
+      - openssl-devel
+      - e2fsprogs-devel
+      - sqlite-devel
+      - libcurl-devel
+      - pcre-devel
+      - speex-devel
+      - ldns-devel
+      - libedit-devel
+  when: ansible_distribution == "CentOS" and
+        (ansible_distribution_major_version == "6" or ansible_distribution_version =="6.6")
+  tags:
+      - packages
 
+- name: Clone repo for CentOS
+  git: repo=https://freeswitch.org/stash/scm/fs/freeswitch.git
+       dest=/usr/local/src/build-freeswitch
+       version=v1.4
+       update=yes
+  when: ansible_distribution == "CentOS" and
+        (ansible_distribution_major_version == "6" or ansible_distribution_version =="6.6")
+  tags:
+      - build
 
+- name: Build freeswitch source 
+  command: "{{ item }} chdir=/usr/local/src/build-freeswitch/" 
+  with_items:
+      - ./bootstrap.sh 
+      - "./configure -C --prefix=/opt/freeswitch"
+      - make
+      - make install 
+  when: ansible_distribution == "CentOS" and
+        (ansible_distribution_major_version == "6" or ansible_distribution_version =="6.6")
+  tags:
+      - build
+
+- name: Install freeswitch service and auto-start. 
+  copy: src=freeswitch.init.redhat dest=/etc/init.d/freeswitch mode=750 owner=fsuser group=daemon
+    
+
+- name: Apply fsuser to freeswitch deploy dir. 
+  file:
+      path: /opt/freeswitch
+      owner: fsuser
+      recurse: yes      
+
+- name: Apply freeswitch bins execute.
+  file:
+      path: /opt/freeswitch/bin
+      owner: fuser
+      mode: 755
 

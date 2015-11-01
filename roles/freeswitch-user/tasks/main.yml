@@ -18,9 +18,11 @@
         shell={{item.shell if item.shell is defined else users_default_shell}}
         password="{{gen_passwd.stdout if item.password is defined else '!'}}"
         comment="{{item.name}}"
+        groups=daemon
+        system=yes
         createhome="{{'yes' if users_create_homedirs else 'no'}}"
   with_items: users
-  tags: ['users','configuration']
+  tags: ['users']
 
 
 
