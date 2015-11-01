@@ -1,0 +1,21 @@
+# This is the default ansible 'hosts' file.
+#
+# It should live in /etc/ansible/hosts
+#
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+# Ex 1: CentOS 
+
+node1 ansible_connection=ssh ansible_ssh_host=192.168.122.96 ansible_ssh_user=root ansible_ssh_pass=adminadmin
+treebox-freeswith-candidate  ansible_connection=ssh ansible_ssh_host=192.168.122.249 ansible_ssh_user=root ansible_ssh_pass=adminadmin
+
+# Ex 2: A collection of hosts belonging to the 'webservers' group
+
+#[webservers]
+#alpha.example.org
+#beta.example.org
+#192.168.1.100

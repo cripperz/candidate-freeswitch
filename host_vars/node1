@@ -1,0 +1,6 @@
+---
+# file: host_vars/node1 
+
+
+user: 
+var_beta: 1a
