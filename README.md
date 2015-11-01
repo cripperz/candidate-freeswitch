@@ -5,7 +5,7 @@
 
 ## Roles
 
-- freeswitch-user  Use to deploy user to remote host with ssh-key authentication support.
+- *** freeswitch-user ***  Use to deploy user to remote host with ssh-key authentication support.
 - freeswitch Use to Build and deploy freeswitch from source to target. 
 
 
