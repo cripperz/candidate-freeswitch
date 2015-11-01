@@ -15,10 +15,12 @@
 . /etc/init.d/functions
 
 PROG_NAME=freeswitch
-PID_FILE=${PID_FILE-/var/run/freeswitch/freeswitch.pid}
-FS_USER=${FS_USER-freeswitch}
-FS_FILE=${FS_FILE-/usr/bin/freeswitch} 
-FS_HOME=${FS_HOME-/var/run/freeswitch}
+PROG_DIR=/opt/freeswitch/
+
+PID_FILE=${PROG_DIR/freeswitch.pid}
+FS_USER=${fsuser}
+FS_FILE=${PROG_DIR/bin/freeswitch} 
+FS_HOME=${PROG_DIR}
 LOCK_FILE=/var/lock/subsys/freeswitch
 FREESWITCH_ARGS="-nc"
 RETVAL=0

@@ -1,5 +1,11 @@
 ---
 
+- name: Check remote host met this requirment or not
+  fail: msg="Please use Centos 6 cause this playbook design for that recommand Centos 6.6-6.7"
+  when: ansible_distribution == "CentOS" and
+        (ansible_distribution_major_version == "6" or ansible_distribution_version =="6.6")
+
+
 - name: Install EPEL
   yum: name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
   tags:
@@ -33,6 +39,7 @@
   tags:
       - packages
 
+
 - name: Clone repo for CentOS
   git: repo=https://freeswitch.org/stash/scm/fs/freeswitch.git
        dest=/usr/local/src/build-freeswitch
@@ -42,6 +49,7 @@
         (ansible_distribution_major_version == "6" or ansible_distribution_version =="6.6")
   tags:
       - build
+      - build-and-deploy
 
 - name: Build freeswitch source 
   command: "{{ item }} chdir=/usr/local/src/build-freeswitch/" 
@@ -54,10 +62,12 @@
         (ansible_distribution_major_version == "6" or ansible_distribution_version =="6.6")
   tags:
       - build
+      - build-and-deploy
 
 - name: Install freeswitch service and auto-start. 
   copy: src=freeswitch.init.redhat dest=/etc/init.d/freeswitch mode=750 owner=fsuser group=daemon
-    
+  tags:
+      - build-and-deploy
 
 - name: Apply fsuser to freeswitch deploy dir. 
   file:
