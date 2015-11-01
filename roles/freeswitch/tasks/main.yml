@@ -68,6 +68,9 @@
 - name: Apply freeswitch bins execute.
   file:
       path: /opt/freeswitch/bin
-      owner: fuser
+      owner: fsuser
       mode: 755
+      recurse: yes
+
+
 
