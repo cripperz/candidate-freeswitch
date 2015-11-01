@@ -15,14 +15,15 @@
 . /etc/init.d/functions
 
 PROG_NAME=freeswitch
-PROG_DIR=/opt/freeswitch/
+PROG_DIR={{ freeswitch_dir }}
+PROG_USER={{ freeswitch_run_user }}
 
-PID_FILE=${PROG_DIR/freeswitch.pid}
-FS_USER=${fsuser}
-FS_FILE=${PROG_DIR/bin/freeswitch} 
+PID_FILE=${PROG_DIR}/freeswitch.pid
+FS_USER=${PROG_USER}
+FS_FILE=${PROG_DIR}/bin/freeswitch
 FS_HOME=${PROG_DIR}
 LOCK_FILE=/var/lock/subsys/freeswitch
-FREESWITCH_ARGS="-nc"
+FREESWITCH_ARGS="-n c"
 RETVAL=0
 
 # Source usr/localions file
@@ -103,4 +104,3 @@ case "$1" in
         ;;
 esac
 exit $RETVAL
-

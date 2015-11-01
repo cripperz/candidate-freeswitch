@@ -33,6 +33,7 @@
       - pcre-devel
       - speex-devel
       - ldns-devel
+      - vim 
       - libedit-devel
   when: ansible_distribution == "CentOS" and
         (ansible_distribution_major_version == "6" or ansible_distribution_version =="6.6")
@@ -65,20 +66,20 @@
       - build-and-deploy
 
 - name: Install freeswitch service and auto-start. 
-  copy: src=freeswitch.init.redhat dest=/etc/init.d/freeswitch mode=750 owner=fsuser group=daemon
+  template: src=freeswitch.init.redhat.j2 dest=/etc/init.d/freeswitch mode=750 owner={{freeswitch_run_user}} group=daemon
   tags:
       - build-and-deploy
 
-- name: Apply fsuser to freeswitch deploy dir. 
+- name: Apply user access right to freeswitch deploy dir. 
   file:
-      path: /opt/freeswitch
-      owner: fsuser
+      path: {{freeswitch_dir}} 
+      owner: {{freeswitch_run_user}}
       recurse: yes      
 
 - name: Apply freeswitch bins execute.
   file:
-      path: /opt/freeswitch/bin
-      owner: fsuser
+      path: {{freeswitch_dir}}/bin
+      owner: {{freeswitch_run_user}}
       mode: 755
       recurse: yes
 
