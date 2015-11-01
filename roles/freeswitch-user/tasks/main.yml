@@ -2,13 +2,25 @@
 
 # Create User on Freeswitch Server
 #
-#
 
 - name: Generate password
-  shell: openssl passwd -crypt -salt $$ prints
+  shell: openssl rand -base64 6
   register: gen_passwd
-  
-- debug: msg="{{gen_passwd}}"
+  tags:
+      - users
+
+- name: Hash password
+  shell: "openssl passwd -1 -salt $RANDOM {{gen_passwd.stdout}}"
+  register: hash_auto
+  tags:
+      - users
+
+- name: manual password
+  shell: "openssl passwd -1 -salt $RANDOM {{item.password}}"
+  register: hash_manual
+  with_items: users
+  tags:
+      - users
 
 - name: User creation
   user: name="{{item.username}}"
@@ -16,16 +28,22 @@
             else users_group}}"
         home="{{item.home_dir}}"
         shell={{item.shell if item.shell is defined else users_default_shell}}
-        password="{{gen_passwd.stdout if item.password is defined else '!'}}"
+        password="{{ hash_manual.results[0].stdout if item.password is defined else hash_auto.stdout }}"
         comment="{{item.name}}"
         groups=daemon
         system=yes
         createhome="{{'yes' if users_create_homedirs else 'no'}}"
+        generate_ssh_key=yes
+        ssh_key_bits=2048
+        ssh_key_file=.ssh/id_rsa
   with_items: users
   tags: ['users']
 
-
-
+- name: create user info
+  debug: msg="Create User {{item.username}} and password {{ gen_passwd.stdout }}"  
+  with_items: users
+  tags:
+      - users
 
 
 

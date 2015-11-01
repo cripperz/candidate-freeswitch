@@ -4,20 +4,24 @@
 - hosts: all 
   sudo: yes 
   vars:
+    freeswitch_users:
+      - fs_user_id: test01
+        fs_user_password: pwstest01
+      - fs_user_id: test02  
+        fs_user_password: test02
     freeswitch_run_user: fsuser
     freeswitch_dir: /opt/freeswitch
     users:
       - username: fsuser 
         name: freeswitch users  
         home_dir: "{{freeswitch_dir}}" 
-        password: "123456"
-        ssh_key:
-            - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9bQslGDiJ7cObX07HnWxeBMJxBoG5y0ernnJW6U5eC8bk8hlebGJTdluYDBsa3UpJaIDOo44putydcP02ZNQ32L9YDZlpfmBCB0QZRgAI5bBiOL/3DyteDyLqkz1AAcfG6DduyAm1bt/2zXVzxnExaUYedhNyLuSlyY/FXW1oN9RKvwfCO8y/omgjYk08MwmAZ1H3qH6AQkeMZpWPmVNRhDBpfSP8VOE8Nvubkt/UJZAZ8MgSEkRzyDHRL/HSJ1dUSnbJ3MmF8UeKaYifxWvLJoxOh+I5yIQ6ZGmgboq3YOXppr4Rm+1xN8c9lLSIhOlYrMUEq8ywq4MiKYVv65Nr udomsak@localhost.localdomain"
+        password: "123"
 
   roles:
       - freeswitch-user  
       - freeswitch
       - freeswitch-service
+      - freeswitch-iptables
 
 
 #- hosts: node2

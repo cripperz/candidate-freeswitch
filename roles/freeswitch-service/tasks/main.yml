@@ -1,0 +1,16 @@
+---
+
+# file: {{ name }}/tasks/main.yml
+
+- name: Enable Freeswitch service. 
+  service: name=freeswitch enabled=yes
+  tags:
+    - enable-service
+
+- name: Start Service Freeswitch
+  service: name=freeswitch state=started
+  tags:
+    - start-service
+    - enable-service
+
+

@@ -5,8 +5,19 @@
 
 ## Roles
 
-- **freeswitch-user**  Use to deploy user to remote host support ssh-key authentication support.
-- **freeswitch**  Use to Build and deploy freeswitch from source to target. 
+- **freeswitch-user**  Use to deploy user to remote host support ssh-key authentication support. ** Need to approve Bulk user add
+- **freeswitch**  Use to Build and deploy freeswitch also install pre-binary require from source to target. 
+- **freeswitch-iptables** config iptables *Need to Approve  
+- **freeswitch-service** Use to Enable Service Start enable service  
+- **freeswitch-user** Use to create user
+
+## Design idea
+
+My design idea try to split job function to small roles because it easy to read and maintain in the future.  
+
+- Users add to diaplan you can config from playbook i use template to generate directory file ```$FS_HOME/conf/directory/default```
+- Users add to system. 
+
 
 
 ## Usage
